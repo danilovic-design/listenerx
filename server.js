@@ -37,6 +37,16 @@ const argv = require("yargs/yargs")(process.argv.slice(2))
       requiresArg: false,
       required: false,
     },
+    customresponse: {
+      description: "Enables you send short responses back as HTTP-responses.",
+      required: false,
+      requiresArg: false,
+    },
+    script: {
+      description: "Sends back a custom script file",
+      required: false,
+      requiresArg: true,
+    },
   })
   .help("help")
   .alias("help", "h")
@@ -63,5 +73,5 @@ server.on("clientError", (err, socket) => {
 });
 
 server.listen(portNumber, function () {
-  log("[+] - ListenerX has started on port", portNumber);
+  log("[+] - ListenerX has started on port " + portNumber);
 });

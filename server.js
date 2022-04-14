@@ -1,6 +1,11 @@
 const http = require("http");
 const saveVictimInfo = require("./function_modules/savevictiminfo");
 const responder = require("./function_modules/responder");
+const log = require("./function_modules/logger");
+
+/**
+ * Command line argument option
+ */
 const argv = require("yargs/yargs")(process.argv.slice(2))
   .options({
     port: {
@@ -43,12 +48,14 @@ const argv = require("yargs/yargs")(process.argv.slice(2))
  */
 const portNumber = argv.port || 5000;
 
-// creating server instance
+/**
+ * Node JS server instance, as the backbone of the project.
+ */
 const server = http.createServer((req, res) => {
-  let t = new Date();
-  argv.verbose && console.log(`\n[+] - ${t}`);
-  saveVictimInfo(req, argv, t);
-  responder(req, res, argv, t);
+  let currentTime = new Date();
+  argv.verbose && log(`\n[+] - ${currentTime}`);
+  saveVictimInfo(req, argv, currentTime);
+  responder(req, res, argv, currentTime);
 });
 
 server.on("clientError", (err, socket) => {
@@ -56,5 +63,5 @@ server.on("clientError", (err, socket) => {
 });
 
 server.listen(portNumber, function () {
-  console.log("[+] - ListenerX has started on port", portNumber);
+  log("[+] - ListenerX has started on port", portNumber);
 });

@@ -40,10 +40,10 @@ Certain type of request may be disabled. With --noget / --nopost the server won'
 
 ## DISCLAIMER
 
-This piece of a software is made for educational purposes only. For instance educational purpose may include testing your own environment and learning information security, because... hacking is ILLEGAL. Never use this software outside your allowances, test only those networks which you are actually allowed to test with the owner's explicit consent.
-Should you use this or any other software for malicious purposes, it is only your responsibility
+This piece of a software is made for educational purposes only. Educational purpose may include testing your own environment and learning information security, because... hacking is ILLEGAL. Never use this software outside your allowances, test only those networks which you are actually allowed to test with the owner's explicit consent.
+Should you use this or any other software for malicious purposes, it is only your responsibility.
 
 ### Version
 
-This is ListenerX v.1.0.0
+This is ListenerX v.1.1.0
 Created and tested with node v14.16.0

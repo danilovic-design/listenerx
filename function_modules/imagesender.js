@@ -2,7 +2,6 @@ const path = require("path");
 const fs = require("fs");
 
 const returnImage = function (res) {
-  // answering with an image
   let devilishImage = fs.createReadStream(
     path.join(__dirname, "..", "img", "devil.png")
   );

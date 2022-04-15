@@ -10,7 +10,7 @@ const argv = require("yargs/yargs")(process.argv.slice(2))
   .options({
     port: {
       alias: "p",
-      description: "Sets port to listen on",
+      description: "Sets port to listen on. Default port is 5000",
       requiresArg: true,
       required: false,
     },
@@ -28,7 +28,7 @@ const argv = require("yargs/yargs")(process.argv.slice(2))
     },
     verbose: {
       alias: "v",
-      description: "Verbose feedback in the console",
+      description: "Verbose output in the console",
       requiresArg: false,
       required: false,
     },
@@ -63,7 +63,7 @@ const portNumber = argv.port || 5000;
  */
 const server = http.createServer((req, res) => {
   let currentTime = new Date();
-  argv.verbose && log(`\n[+] - ${currentTime}`);
+  log(argv, `\n[+] - ${currentTime}`);
   saveVictimInfo(req, argv, currentTime);
   responder(req, res, argv, currentTime);
 });
@@ -73,5 +73,9 @@ server.on("clientError", (err, socket) => {
 });
 
 server.listen(portNumber, function () {
-  log("[+] - ListenerX has started on port " + portNumber);
+  log(
+    "************* ListenerX has started on port " +
+      portNumber +
+      " ***************"
+  );
 });

@@ -32,7 +32,9 @@ const sendScript = function (res, argv) {
 };
 
 const responder = function (req, res, argv) {
-  if (req.url === "/favicon.ico") {
+  if (argv.stealth) {
+    return null;
+  } else if (req.url === "/favicon.ico") {
     log(argv, "Favicon requested and sent 404 back.");
     send404(res, argv);
   } else if (req.url.startsWith("/devil")) {

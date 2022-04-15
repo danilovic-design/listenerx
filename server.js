@@ -43,6 +43,12 @@ const argv = require("yargs/yargs")(process.argv.slice(2))
       required: false,
       requiresArg: false,
     },
+    stealth: {
+      description:
+        "Enables stealth mode. The server will not respond to HTML requests.",
+      required: false,
+      requiresArg: false,
+    },
     script: {
       description: "Sends back a custom script file",
       required: false,
@@ -82,6 +88,7 @@ debuglog(
   }`
 );
 debuglog(argv, `[i] - Script sending mode ${argv.script ? "ON" : "OFF"}`);
+debuglog(argv, `[i] - Stealth mode ${argv.stealth ? "ON" : "OFF"}`);
 
 /**
  * Node JS server instance, as the backbone of the project.

@@ -26,17 +26,49 @@ Start the server with command line from its own directory
 node server.js
 ```
 
+For quick help use the help menu:
+
+```sh
+node server.js --help
+```
+
 Incoming requests are saved into the directory called 'victiminfo'.
-The application's default configuration is to run the server on port 8000.
+The application's default configuration is to run the server on port 5000.
 With --port (alias -p) switch the port can be changed.
 
 ```sh
 node server.js -p 9000
 ```
 
-Certain type of request may be disabled. With --noget / --nopost the server won't respond to GET/POST requests.
+Certain type of request may be disabled. With --noget / --nopost the server won't record GET/POST requests.
+
+```sh
+node server.js --nopost
+```
+
+The server default behaviour is to send back a 404 response as a HTML response, but the requests will be recorded.
+You can however overwrite this behaviour with the --customresponse switch, which will send back your short message as a HTML response. Remember that calling the /devil endpoint still will return an image
+
+```sh
+node server.js --customresponse "Hello world"
+```
+
+With stealth mode your server will just not respond to any requests, although they will keep on being recorded.
+
+```sh
+node server.js --stealth
+```
+
+On the other hand, as a HTML response you can send back custom-made scripts.
+This is a test script to test if it really works.
+
+```sh
+node server.js --script ./scripts/testscript.js
+```
 
 ## API
+
+ListenerX responds to any endpoint and records it. There is one particular usecase, when calling /devil endpoint, then it sends back an image besides recording the request.
 
 ## DISCLAIMER
 

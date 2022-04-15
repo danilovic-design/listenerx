@@ -1,10 +1,18 @@
 let log = function (argv, textNode) {
   if (textNode && argv.verbose) {
-    return console.log(textNode);
-  } else {
-    return null;
+    return console.log("[v] - " + textNode);
   }
-  return console.log(textNode);
+
+  if (argv && !textNode) {
+    console.log(argv);
+  }
 };
 
-module.exports = log;
+let debuglog = function (argv, textNode) {
+  if (textNode && argv.debug) {
+    return console.log(textNode);
+  }
+};
+
+module.exports.log = log;
+module.exports.debuglog = debuglog;

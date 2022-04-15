@@ -1,7 +1,8 @@
 const http = require("http");
 const saveVictimInfo = require("./function_modules/savevictiminfo");
 const responder = require("./function_modules/responder");
-const log = require("./function_modules/logger");
+const log = require("./function_modules/logger").log;
+const debuglog = require("./function_modules/logger").debuglog;
 
 /**
  * Command line argument option
@@ -59,11 +60,40 @@ const argv = require("yargs/yargs")(process.argv.slice(2))
 const portNumber = argv.port || 5000;
 
 /**
+ * Debug mode tests
+ */
+debuglog(argv, `[i] - Port set to ${argv.port ? argv.port : 5000}`);
+!(typeof portNumber === "number") &&
+  debuglog(argv, `[x] - ERROR! The given port number is not a number.`);
+!(typeof portNumber === "number" && portNumber >= 0 && portNumber <= 65535) &&
+  debuglog(
+    argv,
+    `[x] - ERROR! The given port is outside of the scope of port numbers. It should be between 0 and 65535`
+  );
+debuglog(argv, `[i] - Debug mode ${argv.debug ? "ON" : "OFF"}`);
+debuglog(argv, `[i] - Verbose mode ${argv.verbose ? "ON" : "OFF"}`);
+debuglog(argv, `[i] - No-get mode ${argv.noget ? "ON" : "OFF"}`);
+debuglog(argv, `[i] - No-post mode ${argv.nopost ? "ON" : "OFF"}`);
+debuglog(argv, `[i] - Params-only mode ${argv.paramsonly ? "ON" : "OFF"}`);
+debuglog(
+  argv,
+  `[i] - Custom response set to ${
+    argv.customresponse ? argv.customresponse : "no-answer"
+  }`
+);
+debuglog(argv, `[i] - Script sending mode ${argv.script ? "ON" : "OFF"}`);
+
+/**
  * Node JS server instance, as the backbone of the project.
  */
 const server = http.createServer((req, res) => {
   let currentTime = new Date();
-  log(argv, `\n[+] - ${currentTime}`);
+  log(argv, "\t");
+  log(argv, `${currentTime}`);
+  debuglog(
+    argv,
+    `[i] - New incoming request, method: ${req.method}, url: ${req.url}`
+  );
   saveVictimInfo(req, argv, currentTime);
   responder(req, res, argv, currentTime);
 });
@@ -74,8 +104,8 @@ server.on("clientError", (err, socket) => {
 
 server.listen(portNumber, function () {
   log(
-    "************* ListenerX has started on port " +
+    "\n************* ListenerX has started on port " +
       portNumber +
-      " ***************"
+      " ***************\n"
   );
 });

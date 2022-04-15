@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const infoDirectoryName = "victiminfo";
 const url = require("url");
-const log = require("./logger");
+const log = require("./logger").log;
 
 const createCaptionContent = function (t, req) {
   let content = `Caption arrived: ${t} \n \n ${req.url} \n`;
@@ -37,22 +37,22 @@ const saveInfoToFile = function (req, t) {
 
 const saveVictimInfo = function (req, argv, t) {
   if (argv.nopost && req.method === "POST") {
-    log(argv, ">    Incoming POST request, request not recorded");
+    log(argv, "Incoming POST request, request not recorded");
   } else if (argv.noget && req.method === "GET") {
-    log(argv, ">    Incoming GET request, request not recorded");
+    log(argv, "Incoming GET request, request not recorded");
   } else {
     let url_parts = url.parse(req.url, true);
 
-    url_parts.search && log(argv, ">    QUERY PARAMETER PRESENT!");
+    url_parts.search && log(argv, "QUERY PARAMETER PRESENT!");
 
     if (!argv.paramsonly) {
-      log(argv, `>    Incoming ${req.method} request, request recorded`);
+      log(argv, `Incoming ${req.method} request, request recorded`);
       saveInfoToFile(req, t);
     }
     if (argv.paramsonly && url_parts.search) {
       log(
         argv,
-        `>    Incoming ${req.method} request with query parameters, request recorded`
+        `Incoming ${req.method} request with query parameters, request recorded`
       );
       saveInfoToFile(req, t);
     } else {
@@ -60,7 +60,7 @@ const saveVictimInfo = function (req, argv, t) {
         !url_parts.search &&
         log(
           argv,
-          `>    Incoming ${req.method} request not recorded, missing query parameters`
+          `Incoming ${req.method} request not recorded, missing query parameters`
         );
     }
   }
